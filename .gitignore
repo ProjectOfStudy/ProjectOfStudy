@@ -1,0 +1,11 @@
+# Base de données
+*.db
+*.sqlite3
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
