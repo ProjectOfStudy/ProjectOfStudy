@@ -8,6 +8,7 @@ from datetime import datetime
 
 from app import create_app
 from app.models import db
+from app.models.proprietaire import Proprietaire
 from app.models.parcelle import Parcelle
 from app.models.culture import Culture
 from app.models.alerte import Alerte
@@ -31,13 +32,25 @@ with app.app_context():
     db.create_all()
     print("Tables créées.")
 
+    # Proprietaires (avant les parcelles car FK)
+    for row in load_csv('proprietaires.csv'):
+        db.session.add(Proprietaire(
+            id=int(row['id']),
+            nom=row['nom'],
+            prenom=row['prenom'],
+            email=row['email']
+        ))
+    db.session.commit()
+    print(f"  OK {Proprietaire.query.count()} proprietaires importes")
+
     # Parcelles
     for row in load_csv('parcelles.csv'):
         db.session.add(Parcelle(
             id=int(row['id']),
             nom=row['nom'],
             localisation=row['localisation'],
-            surface_ha=float(row['surface_ha'])
+            surface_ha=float(row['surface_ha']),
+            proprietaire_id=int(row['proprietaire_id'])
         ))
     db.session.commit()
     print(f"  OK {Parcelle.query.count()} parcelles importees")
