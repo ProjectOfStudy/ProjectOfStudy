@@ -8,6 +8,9 @@ def create_app():
 
     db.init_app(app)
 
+    # Importer tous les modèles pour que SQLAlchemy les enregistre
+    from app.models import proprietaire, parcelle, culture, alerte, observation, meteo  # noqa: F401
+
     from app.routes.main import main_bp
     app.register_blueprint(main_bp)
 
