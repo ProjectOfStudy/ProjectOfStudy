@@ -24,5 +24,7 @@ def create_app():
 
     from app.routes.alertes import alertes_bp
     app.register_blueprint(alertes_bp)
+    from app.routes.login import login_bp
+    app.register_blueprint(login_bp)
 
     return app
