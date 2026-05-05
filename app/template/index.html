@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}AgroVision — Accueil{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Surveillez vos cultures,<br><span>décidez mieux</span></h1>
+    <p>AgroVision centralise vos données agricoles — météo, observations, parcelles — pour détecter les risques et améliorer vos décisions.</p>
+    <div class="hero-buttons">
+        <a href="/dashboard" class="btn btn-primary">Tableau de bord</a>
+        <a href="#features" class="btn btn-outline">Voir les fonctionnalités</a>
+    </div>
+</section>
+
+<!-- FONCTIONNALITES -->
+<section class="features" id="features">
+    <h2>Fonctionnalités principales</h2>
+    <div class="cards">
+        <div class="card">
+            <div class="card-icon">📋</div>
+            <h3>Tableau de bord</h3>
+            <p>Visualisez l'état de toutes vos parcelles, les données météo et les alertes actives en un coup d'œil.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🗺️</div>
+            <h3>Gestion des parcelles</h3>
+            <p>Créez, modifiez et suivez vos parcelles avec les cultures associées et leur historique complet.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🔔</div>
+            <h3>Système d'alertes</h3>
+            <p>Détection automatique des risques basée sur des règles métier : humidité, température, pluviométrie.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📝</div>
+            <h3>Observations terrain</h3>
+            <p>Saisissez vos observations sur le terrain et consultez l'historique des états des cultures.</p>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+    <div class="stat">
+        <span class="stat-number">500+</span>
+        <span class="stat-label">Parcelles suivies</span>
+    </div>
+    <div class="stat">
+        <span class="stat-number">24/7</span>
+        <span class="stat-label">Surveillance continue</span>
+    </div>
+    <div class="stat">
+        <span class="stat-number">98%</span>
+        <span class="stat-label">Précision des alertes</span>
+    </div>
+    <div class="stat">
+        <span class="stat-number">30%</span>
+        <span class="stat-label">Réduction des pertes</span>
+    </div>
+</section>
+
+<!-- APPEL A L'ACTION -->
+<section class="cta">
+    <h2>Prêt à moderniser votre suivi agricole ?</h2>
+    <p>Commencez dès maintenant à surveiller vos cultures.</p>
+    <a href="/dashboard" class="btn btn-primary">Commencer maintenant</a>
+</section>
+
+{% endblock %}
