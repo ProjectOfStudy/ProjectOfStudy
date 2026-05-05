@@ -262,3 +262,161 @@ ul { list-style: none; }
     .nav-links { gap: 1rem; }
     .stat { padding: 0.75rem 1.5rem; }
 }
+
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* En-tête */
+.dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.dash-header h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.dash-header p {
+    font-size: 0.9rem;
+    color: var(--medium);
+    margin-top: 0.2rem;
+}
+
+/* Bandeau météo */
+.meteo-banner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    background-color: var(--yellow-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+    color: var(--dark);
+    font-weight: 500;
+    flex-wrap: wrap;
+}
+
+/* KPI */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.kpi-card {
+    background-color: var(--yellow-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.kpi-card--danger {
+    background-color: #fff0f0;
+    border-color: #f5b8b8;
+}
+
+.kpi-icon  { font-size: 1.5rem; }
+.kpi-value { font-size: 2rem; font-weight: 800; color: var(--dark); line-height: 1; }
+.kpi-label { font-size: 0.85rem; color: var(--medium); }
+
+/* Grille 2 colonnes */
+.dash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* Carte */
+.dash-card {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.dash-card h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--yellow-bg);
+    color: var(--medium);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #f0e8d0;
+    color: var(--dark);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+.data-table tbody tr:hover { background-color: var(--yellow-bg); }
+
+/* Lignes colorées selon le risque */
+.row--danger { background-color: #fff0f0 !important; }
+.row--warning { background-color: #fffbe6 !important; }
+
+/* Badges de niveau */
+.badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge--1   { background-color: #e8f5e9; color: #2e7d32; }
+.badge--2   { background-color: #fff8e1; color: #f57f17; }
+.badge--3   { background-color: #ffebee; color: #c62828; }
+.badge--ok  { background-color: #e8f5e9; color: #2e7d32; }
+.badge--danger { background-color: #ffebee; color: #c62828; }
+
+/* Responsive dashboard */
+@media (max-width: 800px) {
+    .dash-grid { grid-template-columns: 1fr; }
+    .dash-header { flex-direction: column; align-items: flex-start; }
+}

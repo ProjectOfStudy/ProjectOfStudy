@@ -3,7 +3,147 @@
 {% block title %}AgroVision — Tableau de bord{% endblock %}
 
 {% block content %}
+<div class="dashboard">
 
-  <!-- Ton design ici -->
+    <!-- EN-TETE -->
+    <div class="dash-header">
+        <div>
+            <h1>Tableau de bord</h1>
+            <p>Vue d'ensemble de toutes les parcelles — accès complet</p>
+        </div>
+        {% if derniere_meteo %}
+        <div class="meteo-banner">
+            <span>&#127780; {{ derniere_meteo.date }}</span>
+            <span>&#127777; {{ derniere_meteo.temperature }}°C</span>
+            <span>&#128167; {{ derniere_meteo.humidite }}%</span>
+            <span>&#127783; {{ derniere_meteo.pluie_mm }} mm</span>
+            {% if derniere_meteo.humidite > 80 %}
+            <span class="badge badge--danger">Humidité élevée</span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
 
+    <!-- KPI -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <span class="kpi-icon">&#127807;</span>
+            <span class="kpi-value">{{ stats.nb_parcelles }}</span>
+            <span class="kpi-label">Parcelles surveillées</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-icon">&#128276;</span>
+            <span class="kpi-value">{{ stats.nb_alertes }}</span>
+            <span class="kpi-label">Alertes au total</span>
+        </div>
+        <div class="kpi-card kpi-card--danger">
+            <span class="kpi-icon">&#9888;</span>
+            <span class="kpi-value">{{ stats.nb_critiques }}</span>
+            <span class="kpi-label">Alertes critiques (niveau 3)</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-icon">&#128221;</span>
+            <span class="kpi-value">{{ stats.nb_observations }}</span>
+            <span class="kpi-label">Observations terrain</span>
+        </div>
+    </div>
+
+    <!-- ALERTES + OBSERVATIONS -->
+    <div class="dash-grid">
+
+        <!-- Alertes récentes -->
+        <div class="dash-card">
+            <h2>&#128276; Alertes récentes</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Parcelle</th>
+                        <th>Niveau</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in alertes %}
+                    <tr class="{% if a.niveau == 3 %}row--danger{% elif a.niveau == 2 %}row--warning{% endif %}">
+                        <td>{{ a.date }}</td>
+                        <td>{{ a.type }}</td>
+                        <td>{{ a.parcelle.nom }}</td>
+                        <td><span class="badge badge--{{ a.niveau }}">Niveau {{ a.niveau }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Observations récentes -->
+        <div class="dash-card">
+            <h2>&#128221; Observations récentes</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>État</th>
+                        <th>Parcelle</th>
+                        <th>Commentaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in observations %}
+                    <tr class="
+                        {% if o.etat == 'Maladie détectée' %}row--danger
+                        {% elif o.etat == 'Risque maladie' or o.etat == 'Stress hydrique' %}row--warning
+                        {% endif %}">
+                        <td>{{ o.date }}</td>
+                        <td>{{ o.etat }}</td>
+                        <td>{{ o.parcelle.nom }}</td>
+                        <td>{{ o.commentaire }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- ETAT DES PARCELLES -->
+    <div class="dash-card">
+        <h2>&#128506; État des parcelles</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Parcelle</th>
+                    <th>Propriétaire</th>
+                    <th>Zone</th>
+                    <th>Surface</th>
+                    <th>Culture</th>
+                    <th>Dernière observation</th>
+                    <th>Dernière alerte</th>
+                    <th>Risque</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in parcelles %}
+                <tr class="{% if p.last_alerte and p.last_alerte.niveau == 3 %}row--danger{% elif p.last_alerte and p.last_alerte.niveau == 2 %}row--warning{% endif %}">
+                    <td><strong>{{ p.nom }}</strong></td>
+                    <td>{% if p.proprietaire %}{{ p.proprietaire.prenom }} {{ p.proprietaire.nom }}{% else %}—{% endif %}</td>
+                    <td>{{ p.localisation }}</td>
+                    <td>{{ p.surface_ha }} ha</td>
+                    <td>{% if p.cultures %}{{ p.cultures[0].type }}{% else %}—{% endif %}</td>
+                    <td>{% if p.last_observation %}{{ p.last_observation.etat }}{% else %}—{% endif %}</td>
+                    <td>{% if p.last_alerte %}{{ p.last_alerte.type }}{% else %}—{% endif %}</td>
+                    <td>
+                        {% if p.last_alerte %}
+                            <span class="badge badge--{{ p.last_alerte.niveau }}">Niveau {{ p.last_alerte.niveau }}</span>
+                        {% else %}
+                            <span class="badge badge--ok">OK</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
 {% endblock %}
