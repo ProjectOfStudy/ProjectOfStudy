@@ -3,6 +3,9 @@
 {% block title %}AgroVision — Tableau de bord{% endblock %}
 
 {% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
 <div class="dashboard">
 
     <!-- FLASH MESSAGES -->
@@ -60,27 +63,100 @@
         </div>
     </div>
 
+    <!-- ══════════════════════════════════════════════════
+         BARRE DE FILTRES
+    ══════════════════════════════════════════════════ -->
+    <div class="filter-bar">
+        <form method="get" action="/dashboard" class="filter-form">
+
+            <!-- Calendrier : date début -->
+            <div class="filter-group">
+                <label for="date_debut">Du</label>
+                <input
+                    type="date"
+                    id="date_debut"
+                    name="date_debut"
+                    value="{{ filtres.date_debut }}"
+                >
+            </div>
+
+            <!-- Calendrier : date fin -->
+            <div class="filter-group">
+                <label for="date_fin">Au</label>
+                <input
+                    type="date"
+                    id="date_fin"
+                    name="date_fin"
+                    value="{{ filtres.date_fin }}"
+                >
+            </div>
+
+            <!-- Filtre niveau d'alerte -->
+            <div class="filter-group">
+                <label for="niveau">Niveau</label>
+                <select id="niveau" name="niveau">
+                    <option value="">Tous</option>
+                    <option value="1" {% if filtres.niveau == '1' %}selected{% endif %}>Niveau 1</option>
+                    <option value="2" {% if filtres.niveau == '2' %}selected{% endif %}>Niveau 2</option>
+                    <option value="3" {% if filtres.niveau == '3' %}selected{% endif %}>Niveau 3 — Critique</option>
+                </select>
+            </div>
+
+            <!-- Filtre parcelle -->
+            <div class="filter-group">
+                <label for="parcelle_id">Parcelle</label>
+                <select id="parcelle_id" name="parcelle_id">
+                    <option value="">Toutes</option>
+                    {% for p in toutes_parcelles %}
+                    <option value="{{ p.id }}" {% if filtres.parcelle_id == p.id|string %}selected{% endif %}>
+                        {{ p.nom }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Boutons -->
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-primary">Filtrer</button>
+                {% if filtres_actifs %}
+                <a href="/dashboard" class="btn btn-outline">&#10005; Réinitialiser</a>
+                {% endif %}
+            </div>
+
+        </form>
+
+        {% if filtres_actifs %}
+        <div class="filter-active-notice">
+            Filtres actifs
+            {% if filtres.date_debut %} · Du <strong>{{ filtres.date_debut }}</strong>{% endif %}
+            {% if filtres.date_fin %} au <strong>{{ filtres.date_fin }}</strong>{% endif %}
+            {% if filtres.niveau %} · Niveau <strong>{{ filtres.niveau }}</strong>{% endif %}
+            {% if filtres.parcelle_id %} · Parcelle sélectionnée{% endif %}
+        </div>
+        {% endif %}
+    </div>
+
     <!-- KPI -->
     <div class="kpi-grid">
         <div class="kpi-card">
-            <span class="kpi-icon">&#127807;</span>
+            <span class="kpi-icon"></span>
             <span class="kpi-value">{{ stats.nb_parcelles }}</span>
             <span class="kpi-label">Parcelles surveillées</span>
         </div>
         <div class="kpi-card">
-            <span class="kpi-icon">&#128276;</span>
+            <span class="kpi-icon"></span>
             <span class="kpi-value">{{ stats.nb_alertes }}</span>
-            <span class="kpi-label">Alertes au total</span>
+            <span class="kpi-label">Alertes {{ 'filtrées' if filtres_actifs else 'au total' }}</span>
         </div>
         <div class="kpi-card kpi-card--danger">
-            <span class="kpi-icon">&#9888;</span>
+            <span class="kpi-icon"></span>
             <span class="kpi-value">{{ stats.nb_critiques }}</span>
             <span class="kpi-label">Alertes critiques (niveau 3)</span>
         </div>
         <div class="kpi-card">
-            <span class="kpi-icon">&#128221;</span>
+            <span class="kpi-icon"></span>
             <span class="kpi-value">{{ stats.nb_observations }}</span>
-            <span class="kpi-label">Observations terrain</span>
+            <span class="kpi-label">Observations {{ 'filtrées' if filtres_actifs else 'terrain' }}</span>
         </div>
     </div>
 
@@ -89,7 +165,7 @@
 
         <!-- Alertes récentes -->
         <div class="dash-card">
-            <h2>&#128276; Alertes récentes</h2>
+            <h2>Alertes récentes</h2>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -107,6 +183,8 @@
                         <td>{{ a.parcelle.nom }}</td>
                         <td><span class="badge badge--{{ a.niveau }}">Niveau {{ a.niveau }}</span></td>
                     </tr>
+                    {% else %}
+                    <tr><td colspan="4" style="text-align:center; color: var(--medium);">Aucune alerte pour ces critères.</td></tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -114,7 +192,7 @@
 
         <!-- Observations récentes -->
         <div class="dash-card">
-            <h2>&#128221; Observations récentes</h2>
+            <h2>Observations récentes</h2>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -135,6 +213,8 @@
                         <td>{{ o.parcelle.nom }}</td>
                         <td>{{ o.commentaire }}</td>
                     </tr>
+                    {% else %}
+                    <tr><td colspan="4" style="text-align:center; color: var(--medium);">Aucune observation pour ces critères.</td></tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -144,7 +224,7 @@
 
     <!-- ETAT DES PARCELLES -->
     <div class="dash-card">
-        <h2>&#128506; État des parcelles</h2>
+        <h2>État des parcelles</h2>
         <table class="data-table">
             <thead>
                 <tr>
