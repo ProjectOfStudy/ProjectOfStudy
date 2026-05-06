@@ -1,0 +1,190 @@
+/* ===== VARIABLES ===== */
+:root {
+    --yellow:       #C8A44A;
+    --yellow-light: #E8D080;
+    --yellow-bg:    #FAF0CC;
+    --yellow-dark:  #8C6E20;
+    --dark:         #2A2410;
+    --medium:       #5A5030;
+    --white:        #FDFAF0;
+    --border:       #DDD0A0;
+}
+
+/* ===== BASE ===== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--yellow-bg);
+}
+
+/* ===== CENTRAGE DE LA PAGE LOGIN ===== */
+.login-page {
+    min-height: calc(100vh - 64px); /* 64px = hauteur navbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===== CARTE LOGIN ===== */
+.login-wrapper {
+    width: 100%;
+    max-width: 420px;
+    padding: 1rem;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-logo span {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.login-logo span em {
+    color: var(--yellow-dark);
+    font-style: normal;
+}
+
+.login-card {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 4px 24px rgba(42, 36, 16, 0.08);
+}
+
+.login-card h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 0.3rem;
+}
+
+.login-card .subtitle {
+    font-size: 0.9rem;
+    color: var(--medium);
+    margin-bottom: 2rem;
+}
+
+/* ===== FORMULAIRE ===== */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--dark);
+    background-color: var(--white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(200, 164, 74, 0.15);
+}
+
+/* ===== OPTIONS ===== */
+.form-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    font-size: 0.85rem;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--medium);
+    cursor: pointer;
+}
+
+.remember input[type="checkbox"] {
+    accent-color: var(--yellow-dark);
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.forgot-link {
+    color: var(--yellow-dark);
+    font-weight: 600;
+    transition: color 0.2s;
+}
+.forgot-link:hover { color: var(--dark); }
+
+/* ===== BOUTON ===== */
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--yellow);
+    color: var(--dark);
+    border: 2px solid var(--yellow);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: var(--yellow-dark);
+    border-color: var(--yellow-dark);
+}
+
+/* ===== LIEN INSCRIPTION ===== */
+.register-row {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.88rem;
+    color: var(--medium);
+}
+
+.register-row a {
+    color: var(--yellow-dark);
+    font-weight: 600;
+    transition: color 0.2s;
+}
+.register-row a:hover { color: var(--dark); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 2rem 1.25rem;
+    }
+}

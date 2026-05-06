@@ -16,6 +16,11 @@
     <li><a href="/alertes">Alertes</a></li>
     <li><a href="/dashboard" class="nav-cta">Tableau de bord</a></li>
 </ul>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('main.index') }}">Accueil</a></li>
+            <li><a href="{{ url_for('parcelles.list') }}">Parcelles</a></li>
+<li><a href="{{ url_for('dashboard.dashboard') }}" class="nav-cta">Tableau de bord</a></li>
+        </ul>
     </nav>
 
     <main>

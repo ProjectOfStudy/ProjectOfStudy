@@ -262,3 +262,430 @@ ul { list-style: none; }
     .nav-links { gap: 1rem; }
     .stat { padding: 0.75rem 1.5rem; }
 }
+
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* En-tête */
+.dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.dash-header h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.dash-header p {
+    font-size: 0.9rem;
+    color: var(--medium);
+    margin-top: 0.2rem;
+}
+
+/* Bandeau météo */
+.meteo-banner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    background-color: var(--yellow-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+    color: var(--dark);
+    font-weight: 500;
+    flex-wrap: wrap;
+}
+
+/* KPI */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.kpi-card {
+    background-color: var(--yellow-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.kpi-card--danger {
+    background-color: #fff0f0;
+    border-color: #f5b8b8;
+}
+
+.kpi-icon  { font-size: 1.5rem; }
+.kpi-value { font-size: 2rem; font-weight: 800; color: var(--dark); line-height: 1; }
+.kpi-label { font-size: 0.85rem; color: var(--medium); }
+
+/* Grille 2 colonnes */
+.dash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* Carte */
+.dash-card {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.dash-card h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--yellow-bg);
+    color: var(--medium);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #f0e8d0;
+    color: var(--dark);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+.data-table tbody tr:hover { background-color: var(--yellow-bg); }
+
+/* Lignes colorées selon le risque */
+.row--danger { background-color: #fff0f0 !important; }
+.row--warning { background-color: #fffbe6 !important; }
+
+/* Badges de niveau */
+.badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge--1   { background-color: #e8f5e9; color: #2e7d32; }
+.badge--2   { background-color: #fff8e1; color: #f57f17; }
+.badge--3   { background-color: #ffebee; color: #c62828; }
+.badge--ok  { background-color: #e8f5e9; color: #2e7d32; }
+.badge--danger { background-color: #ffebee; color: #c62828; }
+
+/* Responsive dashboard */
+@media (max-width: 800px) {
+    .dash-grid { grid-template-columns: 1fr; }
+    .dash-header { flex-direction: column; align-items: flex-start; }
+}
+
+
+/* ============================================================
+   PAGES (parcelles, formulaires)
+   ============================================================ */
+
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* En-tête de page */
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-top: 0.25rem;
+}
+
+.page-header p {
+    font-size: 0.9rem;
+    color: var(--medium);
+    margin-top: 0.2rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.back-link {
+    font-size: 0.85rem;
+    color: var(--medium);
+    transition: color 0.2s;
+}
+.back-link:hover { color: var(--yellow-dark); }
+
+/* Message flash */
+.flash {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.flash--success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+/* Message vide */
+.empty-msg {
+    font-size: 0.9rem;
+    color: var(--medium);
+    font-style: italic;
+    padding: 0.5rem 0;
+}
+
+/* Boutons d'action dans les tableaux */
+.td-actions { white-space: nowrap; }
+
+.btn-action {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: var(--yellow-bg);
+    color: var(--dark);
+    border: 1px solid var(--border);
+    transition: background-color 0.2s;
+    margin-right: 0.25rem;
+}
+.btn-action:hover { background-color: var(--yellow-light); }
+
+.btn-action--edit {
+    background-color: #e3f0ff;
+    color: #1a56a0;
+    border-color: #b3d4f5;
+}
+.btn-action--edit:hover { background-color: #cce0ff; }
+
+/* Boutons supplémentaires */
+.btn-outline-dark {
+    background-color: transparent;
+    color: var(--dark);
+    border: 2px solid var(--dark);
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+.btn-outline-dark:hover { background-color: var(--yellow-bg); }
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: 2px solid #dc3545;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.btn-danger:hover { background-color: #b02a37; border-color: #b02a37; }
+
+/* Formulaire carte */
+.form-card {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 700px;
+}
+
+/* Formulaire inline dans une dash-card */
+.inline-form {
+    border-top: 1px solid var(--border);
+    padding-top: 1.25rem;
+    margin-top: 1rem;
+}
+.inline-form h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--medium);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Groupes de formulaire */
+.form-row {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 180px;
+}
+
+.form-group--btn {
+    justify-content: flex-end;
+    flex: 0 0 auto;
+    min-width: unset;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--medium);
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 0.9rem;
+    color: var(--dark);
+    background-color: var(--white);
+    transition: border-color 0.2s;
+    width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(200, 164, 74, 0.15);
+}
+
+/* Actions du formulaire */
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .form-row { flex-direction: column; }
+    .form-actions { flex-direction: column-reverse; }
+    .page-header { flex-direction: column; }
+}
+
+/* Filtre zones dashboard */
+.zone-filter {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.zone-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background-color: var(--yellow-bg);
+    border: 1px solid var(--border);
+    color: var(--medium);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.zone-btn:hover {
+    background-color: var(--yellow-lighter);
+    border-color: var(--yellow);
+    color: var(--dark);
+}
+.zone-btn--active {
+    background-color: var(--yellow);
+    border-color: var(--yellow-dark);
+    color: var(--dark);
+}
+.zone-ville {
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+/* Formulaire inline dans les lignes du tableau zones */
+.zone-inline-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.zone-inline-form input {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: var(--dark);
+    background: var(--white);
+    width: auto;
+}
+.zone-inline-form input[name="ville"]     { width: 110px; }
+.zone-inline-form input[name="latitude"]  { width: 80px; }
+.zone-inline-form input[name="longitude"] { width: 80px; }
+.zone-inline-form input:focus {
+    outline: none;
+    border-color: var(--yellow);
+}

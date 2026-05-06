@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}AgroVision — Gestion des zones{% endblock %}
+
+{% block content %}
+<div class="page">
+
+    <div class="page-header">
+        <div>
+            <h1>&#127758; Gestion des zones</h1>
+            <p>Modifiez la ville et les coordonnées GPS associées à chaque zone agricole.</p>
+        </div>
+        <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-outline-dark">← Tableau de bord</a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="flash-list">
+        {% for msg in messages %}
+        <div class="flash flash--success">{{ msg }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="dash-card">
+        <h2>&#127777; Zones et météo associée</h2>
+        <p style="font-size:0.88rem; color:var(--medium); margin-bottom:1.25rem;">
+            La météo de chaque zone est récupérée quotidiennement via les coordonnées GPS.
+            Modifiez la ville pour changer la source météo d'une zone.
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Zone</th>
+                    <th>Ville actuelle</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for z in zones %}
+                <tr>
+                    <td><strong>{{ z.nom }}</strong></td>
+                    <td>{{ z.ville }}</td>
+                    <td>{{ z.latitude }}</td>
+                    <td>{{ z.longitude }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('zones.edit', id=z.id) }}"
+                              class="zone-inline-form">
+                            <input type="text"   name="ville"     value="{{ z.ville }}"
+                                   placeholder="Ville" required>
+                            <input type="number" name="latitude"  value="{{ z.latitude }}"
+                                   step="0.0001" placeholder="Lat" required>
+                            <input type="number" name="longitude" value="{{ z.longitude }}"
+                                   step="0.0001" placeholder="Lon" required>
+                            <button type="submit" class="btn-action btn-action--edit">
+                                Enregistrer
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dash-card" style="font-size:0.88rem; color:var(--medium);">
+        <h2>&#8505; Comment trouver les coordonnées d'une ville ?</h2>
+        <p>Rendez-vous sur <strong>latlong.net</strong> ou <strong>Google Maps</strong>
+           (clic droit → "Plus d'infos sur cet endroit") pour obtenir
+           la latitude et la longitude de n'importe quelle ville.</p>
+    </div>
+
+</div>
+{% endblock %}
