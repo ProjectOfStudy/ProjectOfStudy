@@ -10,16 +10,11 @@
 
     <nav class="navbar">
         <a href="{{ url_for('main.index') }}" class="nav-logo">🌾 AgroVision</a>
-       <ul class="nav-links">
-    <li><a href="#features">Fonctionnalités</a></li>
-    <li><a href="#stats">En chiffres</a></li>
-    <li><a href="/alertes">Alertes</a></li>
-    <li><a href="/dashboard" class="nav-cta">Tableau de bord</a></li>
-</ul>
         <ul class="nav-links">
             <li><a href="{{ url_for('main.index') }}">Accueil</a></li>
             <li><a href="{{ url_for('parcelles.list') }}">Parcelles</a></li>
-<li><a href="{{ url_for('dashboard.dashboard') }}" class="nav-cta">Tableau de bord</a></li>
+            <li><a href="{{ url_for('alertes.liste') }}">Alertes</a></li>
+            <li><a href="{{ url_for('dashboard.dashboard') }}" class="nav-cta">Tableau de bord</a></li>
         </ul>
     </nav>
 
