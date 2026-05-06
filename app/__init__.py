@@ -1,4 +1,4 @@
-from flask import Flask, app
+from flask import Flask
 from app.models import db
 from app.config import Config
 
@@ -19,5 +19,8 @@ def create_app():
 
     from app.routes.parcelles import parcelles_bp
     app.register_blueprint(parcelles_bp)
+
+    from app.routes.login import login_bp
+    app.register_blueprint(login_bp)
 
     return app
