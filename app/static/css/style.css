@@ -629,3 +629,63 @@ ul { list-style: none; }
     .form-actions { flex-direction: column-reverse; }
     .page-header { flex-direction: column; }
 }
+
+/* Filtre zones dashboard */
+.zone-filter {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.zone-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background-color: var(--yellow-bg);
+    border: 1px solid var(--border);
+    color: var(--medium);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.zone-btn:hover {
+    background-color: var(--yellow-lighter);
+    border-color: var(--yellow);
+    color: var(--dark);
+}
+.zone-btn--active {
+    background-color: var(--yellow);
+    border-color: var(--yellow-dark);
+    color: var(--dark);
+}
+.zone-ville {
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+/* Formulaire inline dans les lignes du tableau zones */
+.zone-inline-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.zone-inline-form input {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: var(--dark);
+    background: var(--white);
+    width: auto;
+}
+.zone-inline-form input[name="ville"]     { width: 110px; }
+.zone-inline-form input[name="latitude"]  { width: 80px; }
+.zone-inline-form input[name="longitude"] { width: 80px; }
+.zone-inline-form input:focus {
+    outline: none;
+    border-color: var(--yellow);
+}

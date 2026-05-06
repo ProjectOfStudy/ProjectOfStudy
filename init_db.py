@@ -14,6 +14,7 @@ from app.models.culture import Culture
 from app.models.alerte import Alerte
 from app.models.observation import Observation
 from app.models.meteo import Meteo
+from app.models.zone import Zone
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 
@@ -31,6 +32,24 @@ with app.app_context():
     db.drop_all()
     db.create_all()
     print("Tables créées.")
+
+    # Zones (avant la météo car utilisées comme référence)
+    zones_data = {
+        'Zone A': {'ville': 'Chartres',  'lat':  48.45, 'lon':  1.49},
+        'Zone B': {'ville': 'Tours',     'lat':  47.39, 'lon':  0.69},
+        'Zone C': {'ville': 'Bordeaux',  'lat':  44.84, 'lon': -0.58},
+        'Zone D': {'ville': 'Dijon',     'lat':  47.32, 'lon':  5.04},
+        'Zone E': {'ville': 'Toulouse',  'lat':  43.60, 'lon':  1.44},
+    }
+    for nom, coords in zones_data.items():
+        db.session.add(Zone(
+            nom=nom,
+            ville=coords['ville'],
+            latitude=coords['lat'],
+            longitude=coords['lon']
+        ))
+    db.session.commit()
+    print(f"  OK {Zone.query.count()} zones importees")
 
     # Proprietaires (avant les parcelles car FK)
     for row in load_csv('proprietaires.csv'):
@@ -88,15 +107,16 @@ with app.app_context():
     db.session.commit()
     print(f"  OK {Observation.query.count()} observations importees")
 
-    # Meteo
+    # Meteo (données CSV historiques assignées à Zone A par défaut)
     for row in load_csv('meteo.csv'):
         db.session.add(Meteo(
             date=parse_date(row['date']),
+            zone='Zone A',
             temperature=float(row['temperature']),
             humidite=float(row['humidite']),
             pluie_mm=float(row['pluie_mm'])
         ))
     db.session.commit()
-    print(f"  OK {Meteo.query.count()} entrees meteo importees")
+    print(f"  OK {Meteo.query.count()} entrees meteo importees (Zone A)")
 
     print("\nBase de donnees prete : agrovision.db")
