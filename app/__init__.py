@@ -11,6 +11,8 @@ def create_app():
 
     db.init_app(app)
 
+    from app.routes.alertes import alertes_bp
+    app.register_blueprint(alertes_bp)
     # Importer tous les modèles pour que SQLAlchemy les enregistre
     from app.models import proprietaire, parcelle, culture, alerte, observation, meteo, zone  # noqa: F401
 
