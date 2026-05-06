@@ -1,0 +1,125 @@
+²{% extends 'base.html' %}
+{% block title %}AgroVision — {{ parcelle.nom }}{% endblock %}
+
+{% block content %}
+<div class="page">
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}<div class="flash flash--success">{{ messages[0] }}</div>{% endif %}
+    {% endwith %}
+
+    <!-- En-tête -->
+    <div class="page-header">
+        <div>
+            <a href="{{ url_for('parcelles.list') }}" class="back-link">&#8592; Toutes les parcelles</a>
+            <h1>{{ parcelle.nom }}</h1>
+            <p>
+                {{ parcelle.localisation }} &mdash; {{ parcelle.surface_ha }} ha
+                {% if parcelle.proprietaire %}
+                &mdash; {{ parcelle.proprietaire.prenom }} {{ parcelle.proprietaire.nom }}
+                {% endif %}
+            </p>
+        </div>
+        <div class="header-actions">
+            <a href="{{ url_for('parcelles.edit', id=parcelle.id) }}" class="btn btn-outline-dark">Modifier</a>
+            <form method="POST" action="{{ url_for('parcelles.delete', id=parcelle.id) }}"
+                  onsubmit="return confirm('Supprimer définitivement cette parcelle ?')">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cultures -->
+    <div class="dash-card">
+        <h2>&#127807; Cultures associées</h2>
+
+        {% if parcelle.cultures %}
+        <table class="data-table" style="margin-bottom:1.5rem;">
+            <thead>
+                <tr><th>Type</th><th>Date de semis</th></tr>
+            </thead>
+            <tbody>
+                {% for c in parcelle.cultures %}
+                <tr><td>{{ c.type }}</td><td>{{ c.date_semis }}</td></tr>
+                {% endfor %}
+
+            </tbody>
+            
+        </table>
+        {% else %}
+        <p class="empty-msg">Aucune culture enregistrée pour cette parcelle.</p>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('parcelles.add_culture', id=parcelle.id) }}" class="inline-form">
+            <h3>Associer une culture</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Type de culture</label>
+                    <select name="type" required>
+                        <option value="">— Choisir —</option>
+                        <option>Blé</option>
+                        <option>Maïs</option>
+                        <option>Orge</option>
+                        <option>Tournesol</option>
+                        <option>Colza</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date de semis</label>
+                    <input type="date" name="date_semis" required>
+                </div>
+                <div class="form-group form-group--btn">
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Alertes -->
+    <div class="dash-card">
+        <h2>&#128276; Alertes récentes</h2>
+        {% if alertes %}
+        <table class="data-table">
+            <thead>
+                <tr><th>Date</th><th>Type</th><th>Niveau</th></tr>
+            </thead>
+            <tbody>
+                {% for a in alertes %}
+                <tr class="{% if a.niveau == 3 %}row--danger{% elif a.niveau == 2 %}row--warning{% endif %}">
+                    <td>{{ a.date }}</td>
+                    <td>{{ a.type }}</td>
+                    <td><span class="badge badge--{{ a.niveau }}">Niveau {{ a.niveau }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty-msg">Aucune alerte pour cette parcelle.</p>
+        {% endif %}
+    </div>
+
+    <!-- Observations -->
+    <div class="dash-card">
+        <h2>&#128221; Observations récentes</h2>
+        {% if observations %}
+        <table class="data-table">
+            <thead>
+                <tr><th>Date</th><th>État</th><th>Commentaire</th></tr>
+            </thead>
+            <tbody>
+                {% for o in observations %}
+                <tr class="{% if o.etat == 'Maladie détectée' %}row--danger{% elif o.etat in ['Risque maladie', 'Stress hydrique'] %}row--warning{% endif %}">
+                    <td>{{ o.date }}</td>
+                    <td>{{ o.etat }}</td>
+                    <td>{{ o.commentaire }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty-msg">Aucune observation pour cette parcelle.</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
