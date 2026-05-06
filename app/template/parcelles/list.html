@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}AgroVision — Parcelles{% endblock %}
+
+{% block content %}
+<div class="page">
+
+    <div class="page-header">
+        <div>
+            <h1>Parcelles</h1>
+            <p>{{ parcelles|length }} parcelle(s) enregistrée(s)</p>
+        </div>
+        <a href="{{ url_for('parcelles.new') }}" class="btn btn-primary">+ Nouvelle parcelle</a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}<div class="flash flash--success">{{ messages[0] }}</div>{% endif %}
+    {% endwith %}
+
+    <div class="dash-card">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Parcelle</th>
+                    <th>Propriétaire</th>
+                    <th>Zone</th>
+                    <th>Surface</th>
+                    <th>Culture</th>
+                    <th>Dernière alerte</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in parcelles %}
+                <tr class="{% if p.last_alerte and p.last_alerte.niveau == 3 %}row--danger{% elif p.last_alerte and p.last_alerte.niveau == 2 %}row--warning{% endif %}">
+                    <td><strong>{{ p.nom }}</strong></td>
+                    <td>{% if p.proprietaire %}{{ p.proprietaire.prenom }} {{ p.proprietaire.nom }}{% else %}—{% endif %}</td>
+                    <td>{{ p.localisation }}</td>
+                    <td>{{ p.surface_ha }} ha</td>
+                    <td>{% if p.cultures %}{{ p.cultures[0].type }}{% else %}—{% endif %}</td>
+                    <td>
+                        {% if p.last_alerte %}
+                            <span class="badge badge--{{ p.last_alerte.niveau }}">{{ p.last_alerte.type }}</span>
+                        {% else %}—{% endif %}
+                    </td>
+                    <td class="td-actions">
+                        <a href="{{ url_for('parcelles.detail', id=p.id) }}" class="btn-action">Voir</a>
+                        <a href="{{ url_for('parcelles.edit', id=p.id) }}" class="btn-action btn-action--edit">Modifier</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

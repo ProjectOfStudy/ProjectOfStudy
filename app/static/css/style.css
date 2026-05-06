@@ -420,3 +420,212 @@ ul { list-style: none; }
     .dash-grid { grid-template-columns: 1fr; }
     .dash-header { flex-direction: column; align-items: flex-start; }
 }
+
+
+/* ============================================================
+   PAGES (parcelles, formulaires)
+   ============================================================ */
+
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* En-tête de page */
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-top: 0.25rem;
+}
+
+.page-header p {
+    font-size: 0.9rem;
+    color: var(--medium);
+    margin-top: 0.2rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.back-link {
+    font-size: 0.85rem;
+    color: var(--medium);
+    transition: color 0.2s;
+}
+.back-link:hover { color: var(--yellow-dark); }
+
+/* Message flash */
+.flash {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.flash--success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+/* Message vide */
+.empty-msg {
+    font-size: 0.9rem;
+    color: var(--medium);
+    font-style: italic;
+    padding: 0.5rem 0;
+}
+
+/* Boutons d'action dans les tableaux */
+.td-actions { white-space: nowrap; }
+
+.btn-action {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: var(--yellow-bg);
+    color: var(--dark);
+    border: 1px solid var(--border);
+    transition: background-color 0.2s;
+    margin-right: 0.25rem;
+}
+.btn-action:hover { background-color: var(--yellow-light); }
+
+.btn-action--edit {
+    background-color: #e3f0ff;
+    color: #1a56a0;
+    border-color: #b3d4f5;
+}
+.btn-action--edit:hover { background-color: #cce0ff; }
+
+/* Boutons supplémentaires */
+.btn-outline-dark {
+    background-color: transparent;
+    color: var(--dark);
+    border: 2px solid var(--dark);
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+.btn-outline-dark:hover { background-color: var(--yellow-bg); }
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: 2px solid #dc3545;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.btn-danger:hover { background-color: #b02a37; border-color: #b02a37; }
+
+/* Formulaire carte */
+.form-card {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 700px;
+}
+
+/* Formulaire inline dans une dash-card */
+.inline-form {
+    border-top: 1px solid var(--border);
+    padding-top: 1.25rem;
+    margin-top: 1rem;
+}
+.inline-form h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--medium);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Groupes de formulaire */
+.form-row {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 180px;
+}
+
+.form-group--btn {
+    justify-content: flex-end;
+    flex: 0 0 auto;
+    min-width: unset;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--medium);
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 0.9rem;
+    color: var(--dark);
+    background-color: var(--white);
+    transition: border-color 0.2s;
+    width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(200, 164, 74, 0.15);
+}
+
+/* Actions du formulaire */
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .form-row { flex-direction: column; }
+    .form-actions { flex-direction: column-reverse; }
+    .page-header { flex-direction: column; }
+}
