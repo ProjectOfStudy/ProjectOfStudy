@@ -5,23 +5,59 @@
 {% block content %}
 <div class="dashboard">
 
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="flash-list">
+        {% for msg in messages %}
+        <div class="flash flash--success">{{ msg }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- FILTRE ZONES -->
+    <div class="zone-filter">
+        <a href="{{ url_for('dashboard.dashboard') }}"
+           class="zone-btn {% if not zone_selectionnee %}zone-btn--active{% endif %}">
+            Toutes les zones
+        </a>
+        {% for z in zones %}
+        <a href="{{ url_for('dashboard.dashboard', zone=z.nom) }}"
+           class="zone-btn {% if zone_selectionnee == z.nom %}zone-btn--active{% endif %}">
+            {{ z.nom }} <span class="zone-ville">{{ z.ville }}</span>
+        </a>
+        {% endfor %}
+    </div>
+
     <!-- EN-TETE -->
     <div class="dash-header">
         <div>
             <h1>Tableau de bord</h1>
-            <p>Vue d'ensemble de toutes les parcelles — accès complet</p>
+            <p>
+                {% if zone_selectionnee %}
+                    {{ zone_selectionnee }} — {{ parcelles|length }} parcelle(s)
+                {% else %}
+                    Toutes les zones — {{ parcelles|length }} parcelle(s)
+                {% endif %}
+            </p>
         </div>
-        {% if derniere_meteo %}
-        <div class="meteo-banner">
-            <span>&#127780; {{ derniere_meteo.date }}</span>
-            <span>&#127777; {{ derniere_meteo.temperature }}°C</span>
-            <span>&#128167; {{ derniere_meteo.humidite }}%</span>
-            <span>&#127783; {{ derniere_meteo.pluie_mm }} mm</span>
-            {% if derniere_meteo.humidite > 80 %}
-            <span class="badge badge--danger">Humidité élevée</span>
+        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+            {% if derniere_meteo %}
+            <div class="meteo-banner">
+                <span>&#127780; {{ derniere_meteo.date }}</span>
+                <span>&#127777; {{ derniere_meteo.temperature }}°C</span>
+                <span>&#128167; {{ derniere_meteo.humidite }}%</span>
+                <span>&#127783; {{ derniere_meteo.pluie_mm }} mm</span>
+                {% if derniere_meteo.humidite > 80 %}
+                <span class="badge badge--danger">Humidité élevée</span>
+                {% endif %}
+            </div>
             {% endif %}
+            <form method="POST" action="{{ url_for('meteo.actualiser') }}">
+                <button type="submit" class="btn btn-primary">&#8635; Actualiser météo</button>
+            </form>
         </div>
-        {% endif %}
     </div>
 
     <!-- KPI -->
