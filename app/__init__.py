@@ -1,8 +1,11 @@
 import atexit
 from flask import Flask, app
+from flask_login import LoginManager
 from apscheduler.schedulers.background import BackgroundScheduler
 from app.models import db
 from app.config import Config
+
+login_manager = LoginManager()
 
 
 def create_app():
@@ -11,10 +14,18 @@ def create_app():
 
     db.init_app(app)
 
-    from app.routes.alertes import alertes_bp
-    app.register_blueprint(alertes_bp)
+    login_manager.init_app(app)
+    login_manager.login_view    = 'login.login_page'
+    login_manager.login_message = 'Veuillez vous connecter pour accéder à cette page.'
+
     # Importer tous les modèles pour que SQLAlchemy les enregistre
     from app.models import proprietaire, parcelle, culture, alerte, observation, meteo, zone  # noqa: F401
+
+    from app.models.proprietaire import Proprietaire
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Proprietaire.query.get(int(user_id))
 
     from app.routes.main import main_bp
     app.register_blueprint(main_bp)
@@ -24,6 +35,9 @@ def create_app():
 
     from app.routes.parcelles import parcelles_bp
     app.register_blueprint(parcelles_bp)
+
+    from app.routes.alertes import alertes_bp
+    app.register_blueprint(alertes_bp)
 
     from app.routes.meteo import meteo_bp
     app.register_blueprint(meteo_bp)

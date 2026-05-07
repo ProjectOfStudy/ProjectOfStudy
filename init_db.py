@@ -52,13 +52,17 @@ with app.app_context():
     print(f"  OK {Zone.query.count()} zones importees")
 
     # Proprietaires (avant les parcelles car FK)
+    print("\n  Comptes de connexion :")
     for row in load_csv('proprietaires.csv'):
-        db.session.add(Proprietaire(
+        p = Proprietaire(
             id=int(row['id']),
             nom=row['nom'],
             prenom=row['prenom'],
             email=row['email']
-        ))
+        )
+        p.set_password(row['password'])
+        db.session.add(p)
+        print(f"    {row['email']:<40} -> {row['password']}")
     db.session.commit()
     print(f"  OK {Proprietaire.query.count()} proprietaires importes")
 

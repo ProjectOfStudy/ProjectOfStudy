@@ -12,11 +12,17 @@
         <a href="{{ url_for('main.index') }}" class="nav-logo">🌾 AgroVision</a>
         <ul class="nav-links">
             <li><a href="{{ url_for('main.index') }}">Accueil</a></li>
+            {% if current_user.is_authenticated %}
             <li><a href="{{ url_for('parcelles.list') }}">Parcelles</a></li>
             <li><a href="{{ url_for('alertes.liste') }}">Alertes</a></li>
             <li><a href="{{ url_for('observations.liste') }}">Observations</a></li>
             <li><a href="{{ url_for('dashboard.dashboard') }}" class="nav-cta">Tableau de bord</a></li>
             
+            <li class="nav-user">&#128100; {{ current_user.prenom }} {{ current_user.nom }}</li>
+            <li><a href="{{ url_for('login.logout') }}" class="nav-logout">Déconnexion</a></li>
+            {% else %}
+            <li><a href="{{ url_for('login.login_page') }}" class="nav-cta">Connexion</a></li>
+            {% endif %}
         </ul>
     </nav>
 
