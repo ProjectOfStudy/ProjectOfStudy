@@ -21,10 +21,6 @@ def create_app():
     # Importer tous les modèles pour que SQLAlchemy les enregistre
     from app.models import proprietaire, parcelle, culture, alerte, observation, meteo, zone  # noqa: F401
 
-    # Crée les tables si elles n'existent pas (SQLite local ou PostgreSQL Render)
-    with app.app_context():
-        db.create_all()
-
     from app.models.proprietaire import Proprietaire
 
     @login_manager.user_loader
