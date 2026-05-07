@@ -72,7 +72,7 @@ def generate_alerts_from_observations():
     for p in Parcelle.query.all():
         derniere_obs = (Observation.query
                         .filter_by(parcelle_id=p.id, date=today)
-                        .order_by(Observation.heure.desc())
+                        .order_by(Observation.id.desc())
                         .first())
 
         if not derniere_obs or derniere_obs.etat not in ETAT_VERS_ALERTE:

@@ -64,6 +64,10 @@ def ajouter():
             db.session.add(nouvelle_obs)
             db.session.commit()
 
+            # Générer une alerte si l'état observé le justifie
+            from app.services.alerte_service import generate_alerts_from_observations
+            generate_alerts_from_observations()
+
             flash("Observation enregistrée avec succès !", 'success')
             return redirect(url_for('observations.liste'))
 
