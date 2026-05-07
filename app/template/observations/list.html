@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Observations terrain{% endblock %}
+
+{% block content %}
+<div class="obs-container">
+    <div class="obs-header">
+        <h1>📋 Historique des observations</h1>
+        <a href="{{ url_for('observations.ajouter') }}" class="btn-add">
+            ➕ Nouvelle observation
+        </a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if observations %}
+        <table class="obs-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Parcelle</th>
+                    <th>État</th>
+                    <th>Commentaire</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obs in observations %}
+                    <tr>
+                        <td>{{ obs.date.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ obs.parcelle.nom }}</td>
+                        <td><span class="etat-badge">{{ obs.etat }}</span></td>
+                        <td>{{ obs.commentaire or '—' }}</td>
+                        <td>
+                            <a href="{{ url_for('observations.supprimer', obs_id=obs.id) }}"
+                               class="btn-delete"
+                               onclick="return confirm('Supprimer cette observation ?');">
+                                🗑️
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-obs">
+            <p>📭 Aucune observation enregistrée pour le moment.</p>
+            <a href="{{ url_for('observations.ajouter') }}" class="btn-add">
+                Saisir la première observation
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+
+{% endblock %}
