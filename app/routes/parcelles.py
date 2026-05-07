@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
 from app.models import db
 from app.models.parcelle import Parcelle
 from app.models.culture import Culture
@@ -11,6 +12,7 @@ parcelles_bp = Blueprint('parcelles', __name__, url_prefix='/parcelles')
 
 
 @parcelles_bp.route('/')
+@login_required
 def list():
     parcelles = Parcelle.query.order_by(Parcelle.id).all()
     for p in parcelles:
@@ -19,6 +21,7 @@ def list():
 
 
 @parcelles_bp.route('/<int:id>')
+@login_required
 def detail(id):
     parcelle     = Parcelle.query.get_or_404(id)
     alertes      = Alerte.query.filter_by(parcelle_id=id).order_by(Alerte.date.desc()).limit(5).all()
@@ -30,6 +33,7 @@ def detail(id):
 
 
 @parcelles_bp.route('/nouvelle', methods=['GET', 'POST'])
+@login_required
 def new():
     proprietaires = Proprietaire.query.order_by(Proprietaire.nom).all()
     if request.method == 'POST':
@@ -47,6 +51,7 @@ def new():
 
 
 @parcelles_bp.route('/<int:id>/modifier', methods=['GET', 'POST'])
+@login_required
 def edit(id):
     parcelle      = Parcelle.query.get_or_404(id)
     proprietaires = Proprietaire.query.order_by(Proprietaire.nom).all()
@@ -62,6 +67,7 @@ def edit(id):
 
 
 @parcelles_bp.route('/<int:id>/supprimer', methods=['POST'])
+@login_required
 def delete(id):
     parcelle = Parcelle.query.get_or_404(id)
     db.session.delete(parcelle)
@@ -71,6 +77,7 @@ def delete(id):
 
 
 @parcelles_bp.route('/<int:id>/culture', methods=['POST'])
+@login_required
 def add_culture(id):
     Parcelle.query.get_or_404(id)
     c = Culture(

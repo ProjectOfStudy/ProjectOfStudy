@@ -1,6 +1,7 @@
 from datetime import datetime, date
 
 from flask import Blueprint, render_template, request
+from flask_login import login_required
 from app.models.parcelle import Parcelle
 from app.models.alerte import Alerte
 from app.models.observation import Observation
@@ -11,6 +12,7 @@ dashboard_bp = Blueprint('dashboard', __name__)
 
 
 @dashboard_bp.route('/dashboard')
+@login_required
 def dashboard():
 
     # ── Filtre par zone ───────────────────────────────────────────────────────
