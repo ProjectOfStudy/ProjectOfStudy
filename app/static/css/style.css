@@ -689,3 +689,246 @@ ul { list-style: none; }
     outline: none;
     border-color: var(--yellow);
 }
+
+/* ============================================================
+   PAGES OBSERVATIONS
+   ============================================================ */
+
+.obs-container,
+.form-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* En-tête */
+.obs-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.obs-header h1,
+.form-container h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin: 0;
+}
+
+/* Tableau (réutilise le style des autres tables) */
+.obs-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.88rem;
+}
+
+.obs-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background-color: var(--yellow-bg);
+    color: var(--medium);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+}
+
+.obs-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f0e8d0;
+    color: var(--dark);
+    vertical-align: middle;
+}
+
+.obs-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.obs-table tbody tr:hover {
+    background-color: var(--yellow-bg);
+}
+
+/* Badge état */
+.etat-badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    background-color: var(--yellow-bg);
+    color: var(--yellow-dark);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Boutons spécifiques observations */
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: var(--yellow);
+    color: var(--dark);
+    padding: 0.55rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+    border: 2px solid var(--yellow);
+}
+
+.btn-add:hover {
+    background-color: var(--yellow-dark);
+    border-color: var(--yellow-dark);
+    color: var(--white);
+}
+
+.btn-delete {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    color: var(--medium);
+    background-color: var(--yellow-bg);
+    border: 1px solid var(--border);
+}
+
+.btn-delete:hover {
+    background-color: #ffebee;
+    color: #c62828;
+    border-color: #f5b8b8;
+}
+
+.btn-submit {
+    background-color: var(--yellow);
+    color: var(--dark);
+    padding: 0.7rem 1.6rem;
+    border: 2px solid var(--yellow);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: var(--yellow-dark);
+    border-color: var(--yellow-dark);
+    color: var(--white);
+}
+
+.btn-cancel {
+    background-color: transparent;
+    color: var(--dark);
+    border: 2px solid var(--border);
+    padding: 0.7rem 1.6rem;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: var(--yellow-bg);
+}
+
+/* Formulaire */
+.obs-form {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 700px;
+}
+
+.obs-form .form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--medium);
+    margin-bottom: 0.4rem;
+}
+
+.obs-form .form-group input,
+.obs-form .form-group select,
+.obs-form .form-group textarea {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--dark);
+    background-color: var(--white);
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.obs-form .form-group input:focus,
+.obs-form .form-group select:focus,
+.obs-form .form-group textarea:focus {
+    outline: none;
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(200, 164, 74, 0.15);
+}
+
+.obs-form textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.obs-form .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+/* Message flash spécifique observations (les classes obs spécifiques) */
+.flash-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+}
+
+.flash-error {
+    background-color: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #c62828;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+}
+
+/* État vide */
+.no-obs {
+    text-align: center;
+    padding: 3rem 2rem;
+    background-color: var(--yellow-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--medium);
+}
+
+.no-obs p {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}

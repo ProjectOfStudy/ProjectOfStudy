@@ -1,5 +1,5 @@
 import atexit
-from flask import Flask
+from flask import Flask, app
 from apscheduler.schedulers.background import BackgroundScheduler
 from app.models import db
 from app.config import Config
@@ -30,6 +30,9 @@ def create_app():
 
     from app.routes.login import login_bp
     app.register_blueprint(login_bp)
+
+    from app.routes.observations import observations_bp
+    app.register_blueprint(observations_bp)
 
     _start_scheduler(app)
 
