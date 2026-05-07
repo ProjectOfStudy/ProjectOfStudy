@@ -1,12 +1,21 @@
 import os
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+import os
 
 class Config:
-    SECRET_KEY               = os.environ.get('SECRET_KEY', 'dev-secret-agrovision-2025')
-    SQLALCHEMY_DATABASE_URI  = 'sqlite:///' + os.path.join(BASE_DIR, '..', 'agrovision.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # 1. On récupère l'URL de Render
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    
+    # 2. Correction du nom pour SQLAlchemy
+    if SQLALCHEMY_DATABASE_URI and SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
+    
+    # 3. SÉCURITÉ : Si SQLALCHEMY_DATABASE_URI est vide (sur ton PC), on met SQLite
+    if not SQLALCHEMY_DATABASE_URI:
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///agrovision.db'
 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-agrovision-2025')
     # Coordonnées GPS par zone agricole
     METEO_ZONES = {
         'Zone A': {'lat': 48.45, 'lon':  1.49, 'ville': 'Chartres'},
