@@ -1,3 +1,4 @@
+import time
 from flask import Blueprint, redirect, url_for, flash
 from flask_login import login_required
 from app.models.zone import Zone
@@ -13,7 +14,9 @@ def actualiser():
     """Déclenche manuellement la récupération météo pour toutes les zones."""
     zones = Zone.query.all()
 
-    for z in zones:
+    for i, z in enumerate(zones):
+        if i > 0:
+            time.sleep(1)  # pause entre chaque zone pour éviter le 429
         _, msg = fetch_and_save_today(z.latitude, z.longitude, z.nom)
         flash(msg)
 
