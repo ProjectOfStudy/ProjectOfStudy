@@ -21,12 +21,20 @@
 
     <!-- FILTRE ZONES -->
     <div class="zone-filter">
-        <a href="{{ url_for('dashboard.dashboard') }}"
+        <a href="{{ url_for('dashboard.dashboard',
+                date_debut=filtres.date_debut or none,
+                date_fin=filtres.date_fin or none,
+                niveau=filtres.niveau or none,
+                parcelle_id=filtres.parcelle_id or none) }}"
            class="zone-btn {% if not zone_selectionnee %}zone-btn--active{% endif %}">
             Toutes les zones
         </a>
         {% for z in zones %}
-        <a href="{{ url_for('dashboard.dashboard', zone=z.nom) }}"
+        <a href="{{ url_for('dashboard.dashboard', zone=z.nom,
+                date_debut=filtres.date_debut or none,
+                date_fin=filtres.date_fin or none,
+                niveau=filtres.niveau or none,
+                parcelle_id=filtres.parcelle_id or none) }}"
            class="zone-btn {% if zone_selectionnee == z.nom %}zone-btn--active{% endif %}">
             {{ z.nom }} <span class="zone-ville">{{ z.ville }}</span>
         </a>
@@ -68,6 +76,10 @@
     ══════════════════════════════════════════════════ -->
     <div class="filter-bar">
         <form method="get" action="/dashboard" class="filter-form">
+            <!-- Préserve la zone sélectionnée lors de la soumission du formulaire -->
+            {% if zone_selectionnee %}
+            <input type="hidden" name="zone" value="{{ zone_selectionnee }}">
+            {% endif %}
 
             <!-- Calendrier : date début -->
             <div class="filter-group">
@@ -139,22 +151,22 @@
     <!-- KPI -->
     <div class="kpi-grid">
         <div class="kpi-card">
-            <span class="kpi-icon"></span>
+            <span class="kpi-icon">&#127807;</span>
             <span class="kpi-value">{{ stats.nb_parcelles }}</span>
             <span class="kpi-label">Parcelles surveillées</span>
         </div>
         <div class="kpi-card">
-            <span class="kpi-icon"></span>
+            <span class="kpi-icon">&#128276;</span>
             <span class="kpi-value">{{ stats.nb_alertes }}</span>
             <span class="kpi-label">Alertes {{ 'filtrées' if filtres_actifs else 'au total' }}</span>
         </div>
         <div class="kpi-card kpi-card--danger">
-            <span class="kpi-icon"></span>
+            <span class="kpi-icon">&#9888;</span>
             <span class="kpi-value">{{ stats.nb_critiques }}</span>
             <span class="kpi-label">Alertes critiques (niveau 3)</span>
         </div>
         <div class="kpi-card">
-            <span class="kpi-icon"></span>
+            <span class="kpi-icon">&#128221;</span>
             <span class="kpi-value">{{ stats.nb_observations }}</span>
             <span class="kpi-label">Observations {{ 'filtrées' if filtres_actifs else 'terrain' }}</span>
         </div>
