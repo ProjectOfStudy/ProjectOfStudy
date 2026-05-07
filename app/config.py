@@ -1,7 +1,5 @@
 import os
 
-import os
-
 class Config:
     # 1. On récupère l'URL de Render
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
