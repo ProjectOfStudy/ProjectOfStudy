@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Charge les variables depuis .env si présent
 
 class Config:
     # 1. On récupère l'URL de la base de données (PostgreSQL sur Render)
