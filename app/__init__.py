@@ -54,19 +54,22 @@ def create_app():
 
 
 def _start_scheduler(app):
-    """Lance une tâche automatique toutes les heures pour toutes les zones."""
-    def hourly_job():
+    """Lance une tâche automatique chaque jour à 6h pour toutes les zones."""
+    def daily_job():
         with app.app_context():
+            import time
             from app.models.zone import Zone
             from app.services.meteo_service import fetch_and_save_today
             from app.services.analyse_service import generate_daily_observations
-            for z in Zone.query.all():
+            for i, z in enumerate(Zone.query.all()):
+                if i > 0:
+                    time.sleep(2)
                 _, msg = fetch_and_save_today(z.latitude, z.longitude, z.nom)
                 print(f'[Scheduler] {msg}')
             nb = generate_daily_observations()
             print(f'[Scheduler] {nb} observations générées.')
 
     scheduler = BackgroundScheduler(timezone='Europe/Paris')
-    scheduler.add_job(func=hourly_job, trigger='interval', hours=1)
+    scheduler.add_job(func=daily_job, trigger='cron', hour=6, minute=0)
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
