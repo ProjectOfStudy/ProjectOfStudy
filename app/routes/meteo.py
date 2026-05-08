@@ -33,17 +33,27 @@ def _actualiser_en_arriere_plan(app):
 @login_required
 def test():
     """Route de diagnostic — à supprimer après."""
+    import requests
     from app.models.zone import Zone
-    from app.services.meteo_service import fetch_and_save_today
-    from app.services.analyse_service import generate_daily_observations
+    from app.models.meteo import Meteo
+    from datetime import date
     lignes = []
     zones = Zone.query.all()
-    lignes.append(f"Zones trouvées : {len(zones)}")
-    for z in zones:
-        meteo, msg = fetch_and_save_today(z.latitude, z.longitude, z.nom)
-        lignes.append(f"{z.nom} : {msg}")
-    nb = generate_daily_observations()
-    lignes.append(f"Observations générées : {nb}")
+    lignes.append(f"Zones en BDD : {len(zones)}")
+    lignes.append(f"Meteo aujourd'hui ({date.today()}) : {Meteo.query.filter_by(date=date.today()).count()} enregistrements")
+    # Test un seul appel API sans retry
+    if zones:
+        z = zones[0]
+        try:
+            r = requests.get(
+                "https://api.open-meteo.com/v1/forecast",
+                params={'latitude': z.latitude, 'longitude': z.longitude,
+                        'current': 'temperature_2m', 'timezone': 'Europe/Paris'},
+                timeout=5
+            )
+            lignes.append(f"API Open-Meteo ({z.nom}) : HTTP {r.status_code}")
+        except Exception as e:
+            lignes.append(f"API Open-Meteo erreur : {e}")
     return '<br>'.join(lignes)
 
 
