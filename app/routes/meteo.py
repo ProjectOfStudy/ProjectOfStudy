@@ -15,15 +15,36 @@ def _actualiser_en_arriere_plan(app):
     with app.app_context():
         try:
             zones = Zone.query.all()
+            print(f"[Meteo] {len(zones)} zones trouvées.")
             for i, z in enumerate(zones):
                 if i > 0:
                     time.sleep(1)
                 _, msg = fetch_and_save_today(z.latitude, z.longitude, z.nom)
-                app.logger.info(f"[Meteo] {msg}")
+                print(f"[Meteo] {msg}")
             nb = generate_daily_observations()
-            app.logger.info(f"[Meteo] {nb} observations générées.")
+            print(f"[Meteo] {nb} observations générées.")
         except Exception as e:
-            app.logger.error(f"[Meteo] Erreur arrière-plan : {e}")
+            import traceback
+            print(f"[Meteo] Erreur : {e}")
+            print(traceback.format_exc())
+
+
+@meteo_bp.route('/test')
+@login_required
+def test():
+    """Route de diagnostic — à supprimer après."""
+    from app.models.zone import Zone
+    from app.services.meteo_service import fetch_and_save_today
+    from app.services.analyse_service import generate_daily_observations
+    lignes = []
+    zones = Zone.query.all()
+    lignes.append(f"Zones trouvées : {len(zones)}")
+    for z in zones:
+        meteo, msg = fetch_and_save_today(z.latitude, z.longitude, z.nom)
+        lignes.append(f"{z.nom} : {msg}")
+    nb = generate_daily_observations()
+    lignes.append(f"Observations générées : {nb}")
+    return '<br>'.join(lignes)
 
 
 @meteo_bp.route('/actualiser', methods=['POST'])
